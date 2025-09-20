@@ -41,11 +41,6 @@ func GenerateMaze(width int, height int) *Maze {
 		wallCount--
 	}
 
-	// fmt.Println("count: ", count)
-	// for i := range count {
-	// 	fmt.Println("wall:", walls[i])
-	// }
-
 	return maze
 }
 
