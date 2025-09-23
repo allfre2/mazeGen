@@ -29,17 +29,30 @@ func newMaze(x int, y int) *Maze {
 }
 
 func PrintMaze (maze *Maze) {
+	for i := range (maze.height + 2) {
+		fmt.Printf("%c", wall)
+		i++
+	}
 	fmt.Printf("\n")
 	for i := range maze.width {
+		fmt.Printf("%c", wall)
 		for j := range maze.height {
 			fmt.Printf("%c", maze.Grid[i][j])
 		}
+		fmt.Printf("%c", wall)
 		fmt.Printf("\n")
+	}
+	for i := range (maze.height + 2) {
+		fmt.Printf("%c", wall)
+		i++
 	}
 	fmt.Printf("\n")
 }
 
 func PrintUsage(binName string) {
 	fmt.Println("Usage:")
-	fmt.Println(binName, "[height] [width]")
+	fmt.Println(binName, "[height] [width] [algorithm]")
+	fmt.Println("\nalgorithms:")
+	fmt.Println("1: Prim's")
+	fmt.Println("2: DFS")
 }

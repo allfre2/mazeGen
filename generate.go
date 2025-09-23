@@ -50,7 +50,7 @@ func GenerateMaze2(width int, height int) *Maze {
 
 	var stack Stack[[2]int]
 	
-	start := [2]int {0, 0}
+	start := [2]int {width/2, height/2}
 
 	maze.Grid[start[0]][start[1]] = empty
 
@@ -61,11 +61,16 @@ func GenerateMaze2(width int, height int) *Maze {
 		
 		walls, count := GetWalls(maze, current[0], current[1])
 
-		if count > 1 {
-			stack.Push(current)
+		if count > 0 {
 			cell := walls[rand.IntN(count)]
-			maze.Grid[cell[0]][cell[1]] = empty
-			stack.Push(cell)
+
+			visited := GetVisitedCount(maze, cell[0], cell[1])
+
+			if (IsEdge(maze, cell[0], cell[1]) && visited == 1) || visited < 3 {
+				stack.Push(current)
+				maze.Grid[cell[0]][cell[1]] = empty
+				stack.Push(cell)
+			}
 		}
 	}
 
@@ -128,4 +133,8 @@ func GetVisitedCount(maze *Maze, x int, y int) int {
 	}
 
 	return count
+}
+
+func IsEdge(maze *Maze, x int, y int) bool {
+	return x == 0 || y == 0 || x == maze.width - 1 || y == maze.height -1
 }
