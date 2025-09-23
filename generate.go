@@ -5,7 +5,7 @@ import (
 )
 
 // Iterative randomized Prim's algorithm
-func GenerateMaze(width int, height int) *Maze {
+func GenerateMaze1(width int, height int) *Maze {
 	maze := newMaze(width, height)
 
 	var wallList [][2]int 
@@ -39,6 +39,34 @@ func GenerateMaze(width int, height int) *Maze {
 
 		wallList = append(wallList[:randomWall], wallList[randomWall+1:]...)
 		wallCount--
+	}
+
+	return maze
+}
+
+// Iterative DFS using a stack
+func GenerateMaze2(width int, height int) *Maze {
+	maze := newMaze(width, height)
+
+	var stack Stack[[2]int]
+	
+	start := [2]int {0, 0}
+
+	maze.Grid[start[0]][start[1]] = empty
+
+	stack.Push(start)
+
+	for stack.Size() > 0 {
+		current := stack.Pop()
+		
+		walls, count := GetWalls(maze, current[0], current[1])
+
+		if count > 1 {
+			stack.Push(current)
+			cell := walls[rand.IntN(count)]
+			maze.Grid[cell[0]][cell[1]] = empty
+			stack.Push(cell)
+		}
 	}
 
 	return maze

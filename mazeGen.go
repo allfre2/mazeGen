@@ -26,6 +26,6 @@ func main() {
 		os.Exit(-1)
 	}
 
-	maze := GenerateMaze(height, width)
+	maze := GenerateMaze1(height, width)
 	PrintMaze(maze)
 }

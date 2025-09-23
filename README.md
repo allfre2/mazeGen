@@ -7,7 +7,7 @@
 ## Build
 
 ```bash
-go build mazeGen.go common.go generate.go
+go build mazeGen.go common.go generate.go stack.go
 ```
 
 ## Usage
