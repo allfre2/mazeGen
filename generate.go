@@ -12,7 +12,7 @@ func GenerateMaze1(width int, height int) *Maze {
 	wallCount := 0
 
 	maze.Grid[0][0] = empty
-	walls, count := GetWalls(maze, 0, 0)
+	walls, count := GetWalls(maze, [2]int {0, 0})
 
 	for i := range count {
 		wallList = append(wallList, walls[i])
@@ -24,12 +24,12 @@ func GenerateMaze1(width int, height int) *Maze {
 
 		wall := wallList[randomWall]
 
-		visitedCount := GetVisitedCount(maze, wall[0], wall[1])
+		visitedCount := GetVisitedCount(maze, wall)
 
 		if visitedCount == 1 {
 			maze.Grid[wall[0]][wall[1]] = empty
 
-			adjWalls, adjCount := GetWalls(maze, wall[0], wall[1])
+			adjWalls, adjCount := GetWalls(maze, wall)
 
 			for i := range adjCount {
 				wallList = append(wallList, adjWalls[i])
@@ -59,12 +59,12 @@ func GenerateMaze2(width int, height int) *Maze {
 	for stack.Size() > 0 {
 		current := stack.Pop()
 		
-		walls, count := GetWalls(maze, current[0], current[1])
+		walls, count := GetWalls(maze, current)
 
 		if count > 0 {
 			cell := walls[rand.IntN(count)]
 
-			visited := GetVisitedCount(maze, cell[0], cell[1])
+			visited := GetVisitedCount(maze, cell)
 
 			if (IsEdge(maze, cell[0], cell[1]) && visited == 1) || visited < 3 {
 				stack.Push(current)
@@ -77,57 +77,52 @@ func GenerateMaze2(width int, height int) *Maze {
 	return maze
 }
 
-func GetWalls(maze *Maze, x int, y int) ([][2]int, int) {
+func GetNeighbours(maze *Maze, cell [2]int) [][2]int {
+	var points [][2]int
+
+	if cell[0] - 1 >= 0 {
+		points = append(points, [2]int {cell[0]-1, cell[1]})
+	}
+
+	if cell[0] + 1 < maze.width {
+		points = append(points, [2]int {cell[0]+1, cell[1]})
+	}
+
+	if cell[1] - 1 >= 0 {
+		points = append(points, [2]int {cell[0], cell[1]-1})
+	}
+
+	if cell[1] + 1 < maze.height {
+		points = append(points, [2]int {cell[0], cell[1]+1})
+	}
+
+	return points
+}
+
+func GetWalls(maze *Maze, cell [2]int) ([][2]int, int) {
 	
+	adj := GetNeighbours(maze, cell)
 	var points [][2]int
 	count := 0
 
-	if x - 1 >= 0 && maze.Grid[x-1][y] == wall {
-		points = append(points, [2]int {x-1, y})
-		count++
-	}
-
-	if x + 1 < maze.width && maze.Grid[x+1][y] == wall {
-		points = append(points, [2]int {x+1, y})
-		count++
-	}
-
-	if y - 1 >= 0 && maze.Grid[x][y-1] == wall {
-		points = append(points, [2]int {x, y-1})
-		count++
-	}
-
-	if y + 1 < maze.height && maze.Grid[x][y+1] == wall {
-		points = append(points, [2]int {x, y+1})
-		count++
+	for i := range len(adj) {
+		if maze.Grid[adj[i][0]][adj[i][1]] == wall {
+			points = append(points, adj[i])
+			count++
+		}
 	}
 
 	return points, count
 }
 
-func GetVisitedCount(maze *Maze, x int, y int) int {
+func GetVisitedCount(maze *Maze, cell [2]int) int {
+
+	adj := GetNeighbours(maze, cell)
+
 	count := 0
 
-	if x - 1 >= 0 {
-		if maze.Grid[x-1][y] == empty {
-			count++
-		}
-	}
-
-	if x + 1 < maze.width {
-		if maze.Grid[x+1][y] == empty {
-			count++
-		}
-	}
-
-	if y - 1 >= 0 {
-		if maze.Grid[x][y-1] == empty {
-			count++
-		}
-	}
-
-	if y + 1 < maze.height {
-		if maze.Grid[x][y+1] == empty {
+	for i := range len(adj) {
+		if maze.Grid[adj[i][0]][adj[i][1]] == empty {
 			count++
 		}
 	}

@@ -28,6 +28,18 @@ func newMaze(x int, y int) *Maze {
 	return &maze
 }
 
+func makeNew[T any](x int, y int, val T) [][]T {
+	arr := make([][]T, x)
+	for i := range x {
+		arr[i] = make([]T, y)
+		for j := range y {
+			arr[i][j] = val
+		}
+	}
+
+	return arr
+}
+
 func PrintMaze (maze *Maze) {
 	for i := range (maze.height + 2) {
 		fmt.Printf("%c", wall)
