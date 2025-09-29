@@ -6,6 +6,7 @@ import (
 
 // Iterative randomized Prim's algorithm
 func GenerateMaze1(width int, height int) *Maze {
+
 	maze := newMaze(width, height)
 
 	var wallList [][2]int 

@@ -22,3 +22,7 @@ func (s *Stack[T]) Peek() T {
 func (s *Stack[T]) Size() int {
 	return len(s.elements)
 }
+
+func (s *Stack[T]) Any() bool {
+	return len(s.elements) > 0
+}

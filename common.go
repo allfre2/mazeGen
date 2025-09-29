@@ -5,7 +5,10 @@ import (
 )
 
 const empty rune = ' '
-const wall rune = '█' //'𝦦'
+const wall rune = '█'
+const step rune = '.'
+const startSquare = 'S'
+const goalSquare = 'X'
 
 type Maze struct {
 	Grid [][]rune
@@ -59,6 +62,37 @@ func PrintMaze (maze *Maze) {
 		i++
 	}
 	fmt.Printf("\n")
+}
+
+func PrintPuzzle(maze *Maze, start [2]int, goal [2]int) {
+	for i := range (maze.height + 2) {
+		fmt.Printf("%c", wall)
+		i++
+	}
+	fmt.Printf("\n")
+	for i := range maze.width {
+		fmt.Printf("%c", wall)
+		for j := range maze.height {
+			if start[0] == i && start[1] == j {
+				fmt.Printf("%c", startSquare)
+			} else if goal[0] == i && goal[1] == j {
+				fmt.Printf("%c", goalSquare)
+			} else {
+				fmt.Printf("%c", maze.Grid[i][j])
+			}
+		}
+		fmt.Printf("%c", wall)
+		fmt.Printf("\n")
+	}
+	for i := range (maze.height + 2) {
+		fmt.Printf("%c", wall)
+		i++
+	}
+	fmt.Printf("\n")
+}
+
+func PrintSolution(maze *Maze, start [2]int, goal [2]int, path Stack[[2]int]) {
+
 }
 
 func PrintUsage(binName string) {
