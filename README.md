@@ -21,7 +21,7 @@ algorithms:
 1: Prim's (default)
 2: DFS
 
-dificulty: then higher the number the easier the puzzle. default = 0 (hardest)
+dificulty: the higher the number the easier the puzzle. default = 0 (hardest)
 ```
 
 ## ScreenShots
