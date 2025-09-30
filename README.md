@@ -24,4 +24,4 @@ algorithms:
 
 ## ScreenShots
 
-![maze2](./images/maze2.png)
+![maze3](./images/maze3.png)

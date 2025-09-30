@@ -39,16 +39,24 @@ func main() {
 	}
 
 	var maze *Maze
+	var start [2]int
+	var paths PriorityQueue[Stack[[2]int]]
 
 	switch algorithm {
 	case 1:
-		maze = GenerateMaze1(height, width)
+		maze, start = GenerateMaze1(height, width)
 	case 2:
-		maze = GenerateMaze2(height, width)
+		maze, start = GenerateMaze2(height, width)
 	default:
 		fmt.Println("\nUnsupported algorithm\n")
 		os.Exit(-1)
 	}
+	
+	paths = GetAllPaths(maze, start)
+
+	path, _ := paths.Dequeue()
+
+	MarkSolution(maze, path)
 
 	PrintMaze(maze)
 

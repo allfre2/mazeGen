@@ -6,7 +6,7 @@ import (
 
 const empty rune = ' '
 const wall rune = '█'
-const step rune = '.'
+const stepSquare rune = '.'
 const startSquare = 'S'
 const goalSquare = 'X'
 
@@ -93,6 +93,23 @@ func PrintPuzzle(maze *Maze, start [2]int, goal [2]int) {
 
 func PrintSolution(maze *Maze, start [2]int, goal [2]int, path Stack[[2]int]) {
 
+}
+
+func MarkSolution(maze *Maze, path Stack[[2]int]) {
+	start := path.Pop()
+
+	maze.Grid[start[0]][start[1]] = startSquare
+
+	for path.Size() > 1 {
+		
+		step := path.Pop()
+
+		maze.Grid[step[0]][step[1]] = stepSquare
+	}
+
+	goal := path.Pop()
+
+	maze.Grid[goal[0]][goal[1]] = goalSquare
 }
 
 func PrintUsage(binName string) {

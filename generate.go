@@ -5,15 +5,17 @@ import (
 )
 
 // Iterative randomized Prim's algorithm
-func GenerateMaze1(width int, height int) *Maze {
+func GenerateMaze1(width int, height int) (*Maze, [2]int) {
 
 	maze := newMaze(width, height)
+
+	start := [2]int {0, 0}
 
 	var wallList [][2]int 
 	wallCount := 0
 
 	maze.Grid[0][0] = empty
-	walls, count := GetWalls(maze, [2]int {0, 0})
+	walls, count := GetWalls(maze, start)
 
 	for i := range count {
 		wallList = append(wallList, walls[i])
@@ -42,11 +44,11 @@ func GenerateMaze1(width int, height int) *Maze {
 		wallCount--
 	}
 
-	return maze
+	return maze, start
 }
 
 // Iterative DFS using a stack
-func GenerateMaze2(width int, height int) *Maze {
+func GenerateMaze2(width int, height int) (*Maze, [2]int) {
 	maze := newMaze(width, height)
 
 	var stack Stack[[2]int]
@@ -75,7 +77,7 @@ func GenerateMaze2(width int, height int) *Maze {
 		}
 	}
 
-	return maze
+	return maze, start
 }
 
 func GetNeighbours(maze *Maze, cell [2]int) [][2]int {
@@ -108,6 +110,22 @@ func GetWalls(maze *Maze, cell [2]int) ([][2]int, int) {
 
 	for i := range len(adj) {
 		if maze.Grid[adj[i][0]][adj[i][1]] == wall {
+			points = append(points, adj[i])
+			count++
+		}
+	}
+
+	return points, count
+}
+
+func GetAdjacent(maze *Maze, cell [2]int) ([][2]int, int) {
+	
+	adj := GetNeighbours(maze, cell)
+	var points [][2]int
+	count := 0
+
+	for i := range len(adj) {
+		if maze.Grid[adj[i][0]][adj[i][1]] == empty {
 			points = append(points, adj[i])
 			count++
 		}
