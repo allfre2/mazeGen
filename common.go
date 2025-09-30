@@ -114,8 +114,9 @@ func MarkSolution(maze *Maze, path Stack[[2]int]) {
 
 func PrintUsage(binName string) {
 	fmt.Println("Usage:")
-	fmt.Println(binName, "[height] [width] [algorithm]")
+	fmt.Println(binName, "[height] [width] [algorithm] [dificulty]")
 	fmt.Println("\nalgorithms:")
-	fmt.Println("1: Prim's")
+	fmt.Println("1: Prim's (default)")
 	fmt.Println("2: DFS")
+	fmt.Println("\ndificulty: the higher the number the easier the puzzle. default = 0 (hardest)")
 }

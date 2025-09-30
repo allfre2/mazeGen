@@ -15,11 +15,13 @@ go build -o mazeGen *.go
 
 ```
 Usage:
-./mazeGen [height] [width] [algorithm]
+./mazeGen [height] [width] [algorithm] [dificulty]
 
 algorithms:
-1: Prim's
+1: Prim's (default)
 2: DFS
+
+dificulty: then higher the number the easier the puzzle. default = 0 (hardest)
 ```
 
 ## ScreenShots

@@ -29,7 +29,7 @@ func main() {
 
 	var algorithm int = 1
 
-	if len(os.Args) == 4 {
+	if len(os.Args) > 3 {
 		algorithm, err = strconv.Atoi(os.Args[3])
 
 		if err != nil {
@@ -38,6 +38,17 @@ func main() {
 		}
 	}
 
+	var dificulty int = 0
+
+	if len(os.Args) > 4 {
+		dificulty, err = strconv.Atoi(os.Args[4])
+
+		if err != nil {
+			PrintUsage(os.Args[0])
+			os.Exit(-1)
+		}
+	}
+	
 	var maze *Maze
 	var start [2]int
 	var paths PriorityQueue[Stack[[2]int]]
@@ -53,6 +64,10 @@ func main() {
 	}
 	
 	paths = GetAllPaths(maze, start)
+
+	for i := 0; i < dificulty; i++ {
+		paths.Dequeue()
+	}
 
 	path, _ := paths.Dequeue()
 
