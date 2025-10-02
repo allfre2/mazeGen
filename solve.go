@@ -4,7 +4,6 @@ import (
 	"math"
 )
 
-// TODO:
 // A* to find solutions of the maze
 func Solve(maze *Maze, start [2]int, goal [2]int) Stack[[2]int] {
 	var frontier PriorityQueue[[2]int]
@@ -34,7 +33,7 @@ func Solve(maze *Maze, start [2]int, goal [2]int) Stack[[2]int] {
 		}
 	}
 	
-	// Reconstruct path
+	// Path reconstruction
 	var path Stack[[2]int]
 
 	current := goal
@@ -62,6 +61,19 @@ func GetAllPaths(maze *Maze, start [2]int) PriorityQueue[Stack[[2]int]] {
 	}
 
 	return paths
+}
+
+func GetPath(maze *Maze, start [2]int, dificulty int) Stack[[2]int] {
+
+	cells := GetSortedCells(maze, start)
+
+	for i := 0; i < dificulty; i++ {
+		cells.Dequeue()
+	}
+
+	goal, _ := cells.Dequeue()
+
+	return Solve(maze, start, goal)
 }
 
 func Distance(a [2]int, b [2]int) float64 {

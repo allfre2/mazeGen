@@ -49,9 +49,14 @@ func main() {
 		}
 	}
 	
+	var showSolution bool = false
+
+	if len(os.Args) > 5 && os.Args[5] == "-s" {
+		showSolution = true
+	}
+
 	var maze *Maze
 	var start [2]int
-	var paths PriorityQueue[Stack[[2]int]]
 
 	switch algorithm {
 	case 1:
@@ -63,17 +68,11 @@ func main() {
 		os.Exit(-1)
 	}
 	
-	paths = GetAllPaths(maze, start)
-
-	for i := 0; i < dificulty; i++ {
-		paths.Dequeue()
-	}
-
-	path, _ := paths.Dequeue()
+	path := GetPath(maze, start, dificulty)
 
 	MarkSolution(maze, path)
 
-	PrintMaze(maze)
+	PrintMaze(maze, showSolution)
 
 	os.Exit(0)
 }

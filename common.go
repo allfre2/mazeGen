@@ -19,14 +19,7 @@ type Maze struct {
 func newMaze(x int, y int) *Maze {
 	maze := Maze {width: x, height: y}
 
-	maze.Grid = make([][]rune, maze.width)
-
-	for i := range maze.width {
-		maze.Grid[i] = make([]rune, maze.height)
-		for j := range maze.height {
-			maze.Grid[i][j] = wall
-		}
-	}
+	maze.Grid = makeNew(maze.width, maze.height, wall)
 
 	return &maze
 }
@@ -43,7 +36,7 @@ func makeNew[T any](x int, y int, val T) [][]T {
 	return arr
 }
 
-func PrintMaze (maze *Maze) {
+func PrintMaze(maze *Maze, showSolution bool) {
 	for i := range (maze.height + 2) {
 		fmt.Printf("%c", wall)
 		i++
@@ -52,31 +45,16 @@ func PrintMaze (maze *Maze) {
 	for i := range maze.width {
 		fmt.Printf("%c", wall)
 		for j := range maze.height {
-			fmt.Printf("%c", maze.Grid[i][j])
-		}
-		fmt.Printf("%c", wall)
-		fmt.Printf("\n")
-	}
-	for i := range (maze.height + 2) {
-		fmt.Printf("%c", wall)
-		i++
-	}
-	fmt.Printf("\n")
-}
-
-func PrintPuzzle(maze *Maze, start [2]int, goal [2]int) {
-	for i := range (maze.height + 2) {
-		fmt.Printf("%c", wall)
-		i++
-	}
-	fmt.Printf("\n")
-	for i := range maze.width {
-		fmt.Printf("%c", wall)
-		for j := range maze.height {
-			if start[0] == i && start[1] == j {
-				fmt.Printf("%c", startSquare)
-			} else if goal[0] == i && goal[1] == j {
-				fmt.Printf("%c", goalSquare)
+			if maze.Grid[i][j] == startSquare {
+				fmt.Printf("\033[1m%c\033[0m", startSquare)
+			} else if maze.Grid[i][j] == goalSquare {
+				fmt.Printf("\033[1m%c\033[0m", goalSquare)
+			} else if maze.Grid[i][j] == stepSquare {
+				if showSolution {
+					fmt.Printf("%c", stepSquare)
+				} else {
+					fmt.Printf("%c", empty)
+				}
 			} else {
 				fmt.Printf("%c", maze.Grid[i][j])
 			}
@@ -89,10 +67,6 @@ func PrintPuzzle(maze *Maze, start [2]int, goal [2]int) {
 		i++
 	}
 	fmt.Printf("\n")
-}
-
-func PrintSolution(maze *Maze, start [2]int, goal [2]int, path Stack[[2]int]) {
-
 }
 
 func MarkSolution(maze *Maze, path Stack[[2]int]) {
@@ -114,9 +88,10 @@ func MarkSolution(maze *Maze, path Stack[[2]int]) {
 
 func PrintUsage(binName string) {
 	fmt.Println("Usage:")
-	fmt.Println(binName, "[height] [width] [algorithm] [dificulty]")
+	fmt.Println(binName, "[height] [width] [algorithm] [dificulty] [-s]")
 	fmt.Println("\nalgorithms:")
 	fmt.Println("1: Prim's (default)")
 	fmt.Println("2: DFS")
 	fmt.Println("\ndificulty: the higher the number the easier the puzzle. default = 0 (hardest)")
+	fmt.Println("\n-s: Show Solution (optional)")
 }
