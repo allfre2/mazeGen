@@ -51,7 +51,7 @@ func PrintMaze(maze *Maze, showSolution bool) {
 				fmt.Printf("\033[1m%c\033[0m", goalSquare)
 			} else if maze.Grid[i][j] == stepSquare {
 				if showSolution {
-					fmt.Printf("%c", stepSquare)
+					fmt.Printf("\033[1;36m%c\033[0m", '*')
 				} else {
 					fmt.Printf("%c", empty)
 				}
@@ -92,6 +92,6 @@ func PrintUsage(binName string) {
 	fmt.Println("\nalgorithms:")
 	fmt.Println("1: Prim's (default)")
 	fmt.Println("2: DFS")
-	fmt.Println("\ndificulty: the higher the number the easier the puzzle. default = 0 (hardest)")
+	fmt.Println("\ndificulty: (99-0) the higher the number the easier the puzzle. default = 0 (hardest)")
 	fmt.Println("\n-s: Show Solution (optional)")
 }

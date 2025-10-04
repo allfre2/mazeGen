@@ -47,6 +47,10 @@ func main() {
 			PrintUsage(os.Args[0])
 			os.Exit(-1)
 		}
+
+		if dificulty > 99 { dificulty = 99 }
+
+		if dificulty < 0 { dificulty = 0 }
 	}
 	
 	var showSolution bool = false

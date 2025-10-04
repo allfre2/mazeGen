@@ -38,7 +38,7 @@ func Solve(maze *Maze, start [2]int, goal [2]int) Stack[[2]int] {
 
 	current := goal
 
-	for current[0] != start[0] || current[1] != start[1] {
+	for !cellEquals(current, start) {
 		path.Push(current)
 		current = cameFrom[current[0]][current[1]]
 	}
@@ -67,7 +67,9 @@ func GetPath(maze *Maze, start [2]int, dificulty int) Stack[[2]int] {
 
 	cells := GetSortedCells(maze, start)
 
-	for i := 0; i < dificulty; i++ {
+	index := int(math.Round(float64(cells.Size()) * (float64(dificulty) / 100)))
+
+	for i := 0; i < index; i++ {
 		cells.Dequeue()
 	}
 

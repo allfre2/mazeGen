@@ -21,11 +21,11 @@ algorithms:
 1: Prim's (default)
 2: DFS
 
-dificulty: the higher the number the easier the puzzle. default = 0 (hardest)
+dificulty: (99-0) the higher the number the easier the puzzle. default = 0 (hardest)
 
 -s: Show Solution (optional)
 ```
 
 ## ScreenShots
 
-![maze3](./images/maze3.png)
+![maze4](./images/maze4.png)
